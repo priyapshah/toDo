@@ -1,25 +1,25 @@
-// Create a "delete" button
-var currTasks = document.getElementsByTagName("LI");
-var curr;
-for (curr = 0; curr < currTasks.length; curr++) {
+// Create a "delete" button and append it to each list item
+var myTasks = document.getElementsByTagName("LI");
+var currTask;
+for (currTask = 0; currTask < myTasks.length; currTask++) {
   var span = document.createElement("SPAN");
-  var del = document.createTextNode("\u00D7");
-  span.className = "delete";
-  span.appendChild(del);
-  currTasks[curr].appendChild(span);
+  var txt = document.createTextNode("\u00D7");
+  span.className = "deleteTask";
+  span.appendChild(txt);
+  myTasks[currTask].appendChild(span);
 }
 
-// Click on a close button to hide the current list item
-var delete = document.getElementsByClassName("delete");
-var curr;
-for (curr = 0; curr < delete.length; curr++) {
-  delete[curr].onclick = function() {
+// Click on a delete button to hide the current list item
+var deleteTask = document.getElementsByClassName("deleteTask");
+var currTask;
+for (currTask = 0; currTask < deleteTask.length; currTask++) {
+  deleteTask[currTask].onclick = function() {
     var div = this.parentElement;
     div.style.display = "none";
   }
 }
 
-// Add a "checked" symbol
+// Add a "checked" symbol when clicking on a list item
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
@@ -41,13 +41,13 @@ function newTask() {
   document.getElementById("myInput").value = "";
 
   var span = document.createElement("SPAN");
-  var del = document.createTextNode("\u00D7");
-  span.className = "delete";
-  span.appendChild(del);
+  var txt = document.createTextNode("\u00D7");
+  span.className = "deleteTask";
+  span.appendChild(txt);
   li.appendChild(span);
 
-  for (curr = 0; curr < delete.length; curr++) {
-    delete[curr].onclick = function() {
+  for (currTask = 0; currTask < deleteTask.length; currTask++) {
+    deleteTask[currTask].onclick = function() {
       var div = this.parentElement;
       div.style.display = "none";
     }
