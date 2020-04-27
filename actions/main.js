@@ -1,25 +1,25 @@
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
+// Create a "delete" button
+var currTasks = document.getElementsByTagName("LI");
+var curr;
+for (curr = 0; curr < currTasks.length; curr++) {
   var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
+  var del = document.createTextNode("\u00D7");
+  span.className = "delete";
+  span.appendChild(del);
+  currTasks[curr].appendChild(span);
 }
 
 // Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
+var delete = document.getElementsByClassName("delete");
+var curr;
+for (curr = 0; curr < delete.length; curr++) {
+  delete[curr].onclick = function() {
     var div = this.parentElement;
     div.style.display = "none";
   }
 }
 
-// Add a "checked" symbol when clicking on a list item
+// Add a "checked" symbol
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
@@ -41,13 +41,13 @@ function newTask() {
   document.getElementById("myInput").value = "";
 
   var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
+  var del = document.createTextNode("\u00D7");
+  span.className = "delete";
+  span.appendChild(del);
   li.appendChild(span);
 
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
+  for (curr = 0; curr < delete.length; curr++) {
+    delete[curr].onclick = function() {
       var div = this.parentElement;
       div.style.display = "none";
     }
