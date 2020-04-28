@@ -4,6 +4,7 @@ const options = {weekday: "long", month : "short", day : "numeric", year : "nume
 const today = new Date();
 
 dateDisplay.innerHTML= today.toLocaleDateString("en-US", options)
+
 //retrieves data 
 function get_tasks() {
     var tasks = new Array;
@@ -23,6 +24,9 @@ function add() {
     localStorage.setItem('task', JSON.stringify(tasks));
  
     display();
+   
+    document.getElementById('task').value = '';
+    
     return;
     
 }
