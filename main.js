@@ -22,9 +22,9 @@ function add() {
     tasks.push(task);
     localStorage.setItem('task', JSON.stringify(tasks));
  
-    show();
- 
-    return false;
+    display();
+    return;
+    
 }
  
 //Removes Todo
@@ -34,14 +34,14 @@ function remove() {
     tasks.splice(id, 1);
     localStorage.setItem('task', JSON.stringify(tasks));
  
-    show();
+    display();
  
-    return false;
+    return;
 }
 
  
 //shows ToDo
-function show() {
+function display() {
     var tasks = get_tasks();
  
     var html = '<ul>';
@@ -69,10 +69,10 @@ document.addEventListener("keyup", function(event){
     tasks.push(task);
     localStorage.setItem('task', JSON.stringify(tasks));
  
-    show();
+    display();
  
-    return false;
+    return;
     }
 });
 
-show();
+display();
