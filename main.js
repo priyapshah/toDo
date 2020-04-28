@@ -1,55 +1,78 @@
-// Create a "delete" button and append it to each list item
-var myTasks = document.getElementsByTagName("LI");
-var currTask;
-for (currTask = 0; currTask < myTasks.length; currTask++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "deleteTask";
-  span.appendChild(txt);
-  myTasks[currTask].appendChild(span);
+//date
+const dateDisplay = document.getElementById("date");
+const options = {weekday: "long", month : "short", day : "numeric", year : "numeric"};
+const today = new Date();
+
+dateDisplay.innerHTML= today.toLocaleDateString("en-US", options)
+//retrieves data 
+function get_tasks() {
+    var tasks = new Array;
+    var tasks_str = localStorage.getItem('task');
+    if (tasks_str !== null) {
+        tasks = JSON.parse(tasks_str); 
+    } 
+    return tasks;
+}
+ 
+//New ToDo
+function add() {
+    var task = document.getElementById('task').value;
+ 
+    var tasks = get_tasks();
+    tasks.push(task);
+    localStorage.setItem('task', JSON.stringify(tasks));
+ 
+    show();
+ 
+    return false;
+}
+ 
+//Removes Todo
+function remove() {
+    var id = this.getAttribute('id');
+    var tasks = get_tasks();
+    tasks.splice(id, 1);
+    localStorage.setItem('task', JSON.stringify(tasks));
+ 
+    show();
+ 
+    return false;
 }
 
-// Click on a delete button to hide the current list item
-var deleteTask = document.getElementsByClassName("deleteTask");
-var currTask;
-for (currTask = 0; currTask < deleteTask.length; currTask++) {
-  deleteTask[currTask].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
+ 
+//shows ToDo
+function show() {
+    var tasks = get_tasks();
+ 
+    var html = '<ul>';
+    for(var curr=0; curr<tasks.length; curr++) {
+        html += '<li>' + tasks[curr] + '<button class="remove" id="' + curr + '">x</button></li>';
+    };
+    html += '</ul>';
+ 
+    document.getElementById('tasks').innerHTML = html;
+ 
+    var buttons = document.getElementsByClassName('remove');
+    for (var curr=0; curr < buttons.length; curr++) {
+        buttons[curr].addEventListener('click', remove);
+    };
 }
+ 
+document.getElementById('add').addEventListener('click', add);
 
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
-// Create a new list item when clicking on the "Add" button
-function newTask() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "deleteTask";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-  for (currTask = 0; currTask < deleteTask.length; currTask++) {
-    deleteTask[currTask].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
+//allows user to hit enter
+document.addEventListener("keyup", function(event){
+    if (event.keyCode == 13){
+        var task = document.getElementById('task').value;
+ 
+    var tasks = get_tasks();
+    tasks.push(task);
+    localStorage.setItem('task', JSON.stringify(tasks));
+ 
+    show();
+ 
+    return false;
     }
-  }
-}
+});
+
+show();
